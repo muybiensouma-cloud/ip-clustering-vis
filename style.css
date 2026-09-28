@@ -1,0 +1,23 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f4f7f9; /* わずかにグレーがかった背景で見やすく */
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+}
+
+/* ツールチップ（マウスオーバー時のポップアップ）のデザイン */
+.g6-tooltip {
+    border-radius: 6px;
+    font-size: 14px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 8px 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
