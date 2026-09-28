@@ -6,44 +6,78 @@ const graph = new G6.Graph({
     // 力学モデル（Force）の設定
     layout: {
         type: 'force',
-        preventOverlap: true, // ノード同士の重なりを防ぐ
-        linkDistance: 120,    // 線の基本長さ
-        nodeStrength: -60     // ノード同士の反発力（マイナスが大きいほど離れる）
+        preventOverlap: true, // ノードの重なりを防ぐ
+        linkDistance: 80,     // 線の長さ
+        nodeStrength: -30     // 反発力
     },
-    // マウス操作の設定（ドラッグ、ズーム、ツールチップ）
     modes: {
-        default: [
-            'drag-canvas', 
-            'zoom-canvas', 
-            'drag-node',
-            {
-                type: 'tooltip',
-                formatText: function formatText(model) {
-                    return 'IP: ' + model.id;
-                },
-                offset: 10
-            }
-        ],
+        default: ['drag-canvas', 'zoom-canvas', 'drag-node'],
     },
-    // エッジ（線）のデフォルト設定
     defaultEdge: {
         style: {
             stroke: '#b5b5b5',
             lineWidth: 1,
+            opacity: 0.6
         },
     },
 });
 
-// JSONデータを取得して描画する処理
-fetch('graph_data.json')
-    .then(response => response.json())
-    .then(data => {
-        graph.data(data);
-        graph.render();
-    })
-    .catch(error => console.error('Error loading JSON:', error));
+// ★ここでCSVファイルを直接読み込みます★
+// （ファイル名が違う場合はここを書き換えてください）
+const csvFileName = 'cure_results_20260923_170719.csv';
 
-// ウィンドウサイズが変わった時にキャンバスサイズを自動調整
+Papa.parse(csvFileName, {
+    download: true,
+    header: true,
+    skipEmptyLines: true,
+    complete: function(results) {
+        const data = results.data;
+        const nodesMap = {};
+        const edges = [];
+
+        // CSVの1行ずつ処理していく
+        data.forEach(row => {
+            const source = row['Target_IP'];
+            const target = row['Similar_IP'];
+
+            if (!source || !target) return;
+
+            // 起点となるIP（Target_IP）の設定：赤色で大きく
+            if (!nodesMap[source]) {
+                nodesMap[source] = { 
+                    id: source, 
+                    label: source, 
+                    size: 25, 
+                    style: { fill: '#FF6B6B', stroke: '#d9534f' },
+                    labelCfg: { style: { fill: '#333', fontSize: 12, fontWeight: 'bold' } }
+                };
+            }
+
+            // 類似IP（Similar_IP）の設定：青色で小さく
+            if (!nodesMap[target]) {
+                nodesMap[target] = { 
+                    id: target, 
+                    label: target, 
+                    size: 12, 
+                    style: { fill: '#4D96FF', stroke: '#3a7bd5' },
+                    labelCfg: { position: 'bottom', style: { fill: '#666', fontSize: 10 } }
+                };
+            }
+
+            // 点と点を結ぶ線（エッジ）を追加
+            edges.push({ source: source, target: target });
+        });
+
+        // グラフを描画
+        graph.data({
+            nodes: Object.values(nodesMap),
+            edges: edges
+        });
+        graph.render();
+    }
+});
+
+// 画面サイズが変わったときの自動調整
 window.onresize = () => {
     if (!graph || graph.get('destroyed')) return;
     graph.changeSize(window.innerWidth, window.innerHeight);
