@@ -24,7 +24,7 @@ const graph = new G6.Graph({
 
 // ★ここでCSVファイルを直接読み込みます★
 // （ファイル名が違う場合はここを書き換えてください）
-const csvFileName = 'final_relations_20261007.csv';
+const csvFileName = 'final_relations.csv';
 
 Papa.parse(csvFileName, {
     download: true,
