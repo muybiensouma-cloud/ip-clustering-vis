@@ -23,6 +23,20 @@ body, html {
 }
 
 /*画面に表示するテキスト*/
-p{
-    text-align: left;
+.fixed-sidebar{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 250px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.fixed-sidebar p{
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 14px;
 }
