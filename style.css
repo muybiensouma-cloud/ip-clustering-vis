@@ -23,6 +23,6 @@ body, html {
 }
 
 /*画面に表示するテキスト*/
-text{
+p{
     text-align: left;
 }
