@@ -3,21 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IP Clustering Visualization</title>
+    <title>悪性スキャナ関係図</title>
     <link rel="stylesheet" href="style.css">
-    <!-- AntV G6 ライブラリ（グラフ描画用） -->
     <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.8.14/dist/g6.min.js"></script>
-    <!-- Papa Parse ライブラリ（CSV読み込み用） -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 <body>
-    <div id="container"></div>
-    <script src="script.js"></script>
-    
-    <div class="fixed-sidebar">
-        <p>赤丸は調査IPアドレス</p>
-        <p>青丸は類似IPドレス</p>
+    <div class="page-title">
+        <h1>悪性スキャナ関係図</h1>
     </div>
 
+    <!-- コントロールパネル -->
+    <div id="controlPanel" class="control-panel">
+        <button id="togglePanelBtn" class="toggle-btn">▼ 閉じる</button>
+        <div class="panel-content" id="panelContent">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="IP検索...">
+                <button id="searchBtn">検索</button>
+            </div>
+            
+            <div class="zoom-box">
+                <label>ズーム</label>
+                <div class="zoom-controls">
+                    <button id="zoomOutBtn">-</button>
+                    <input type="range" id="zoomSlider" min="0.1" max="3" step="0.1" value="1">
+                    <button id="zoomInBtn">+</button>
+                </div>
+            </div>
+
+            <div class="filter-box">
+                <label>繋がり数: <span id="degreeVal">0</span> 以上を表示</label>
+                <input type="range" id="degreeSlider" min="0" max="10" value="0">
+            </div>
+            <hr>
+            <div class="legend">
+                <p><span class="legend-red">●</span> 調査IPアドレス</p>
+                <p><span class="legend-blue">●</span> 類似IPアドレス</p>
+            </div>
+
+            <!-- 【新規追加】ここにクリックしたIPの詳細情報が入ります -->
+            <div id="detailInfoContainer" style="display: none; margin-top: 15px; border-top: 2px solid #333; padding-top: 15px;">
+                <!-- JavaScriptで中身が生成されます -->
+            </div>
+        </div>
+    </div>
+
+    <div id="container"></div>
+
+    <script src="script.js"></script>
 </body>
 </html>

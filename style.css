@@ -1,42 +1,85 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #f4f7f9; /*グレー背景*/
-}
-
-#container {
-    width: 100vw;
-    height: 100vh;
-}
-
-/* ツールチップ（マウスオーバー時のポップアップ）のデザイン */
-.g6-tooltip {
-    border-radius: 6px;
-    font-size: 14px;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.75);
-    padding: 8px 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-/*画面に表示するテキスト*/
-.fixed-sidebar{
+/* コントロールパネル本体のスタイルを修正 */
+.control-panel {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 250px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     z-index: 1000;
+    width: 260px;
+    transition: height 0.3s ease;
+    overflow: hidden;
 }
 
-.fixed-sidebar p{
-    margin: 0 0 10px 0;
-    color: #333;
+/* 開閉ボタン */
+.toggle-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #eee;
+    text-align: right;
+    padding: 8px 15px;
+    cursor: pointer;
+    color: #666;
+    font-size: 12px;
+}
+.toggle-btn:hover { background-color: #f9f9f9; }
+
+/* パネルの中身 */
+.panel-content {
+    padding: 15px;
+    transition: display 0.3s ease;
+}
+.panel-content.closed {
+    display: none;
+}
+
+/* ズーム機能のスタイル */
+.zoom-box {
+    margin-top: 15px;
     font-size: 14px;
+}
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+.zoom-controls button {
+    width: 28px;
+    height: 28px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+}
+.zoom-controls button:hover { background: #e0e0e0; }
+.zoom-controls input[type="range"] {
+    flex-grow: 1;
+    margin: 0 10px;
+    cursor: pointer;
+}
+/* 凡例の丸印の色設定 */
+.legend-red {
+    color: #FF6B6B;
+    font-size: 18px;
+}
+
+.legend-blue {
+    color: #4D96FF;
+    font-size: 18px;
+}
+/* コントロールパネル内の詳細情報エリアのスタイル */
+#detailInfoContainer {
+    font-size: 13px;
+    max-height: 40vh; /* 画面の高さの40%を最大とする */
+    overflow-y: auto; /* はみ出たらスクロールバーを出す */
+    color: #333;
+}
+#detailInfoContainer p {
+    margin: 5px 0;
 }
